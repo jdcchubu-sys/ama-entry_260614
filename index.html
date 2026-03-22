@@ -193,7 +193,7 @@ input.error{border-color:var(--danger)}
           <div class="player-col-title"><span class="badge">リーダー</span></div>
           <div class="form-group" style="max-width:50%">
             <label>登録番号<span class="req">*</span></label>
-            <input type="text" id="regLeader" placeholder="例：12345">
+            <input type="text" id="regLeader" placeholder="例：123456" maxlength="6" pattern="\d{6}" inputmode="numeric">
           </div>
           <div class="form-group">
             <label>氏名（漢字）<span class="req">*</span></label>
@@ -212,7 +212,7 @@ input.error{border-color:var(--danger)}
           <div class="player-col-title"><span class="badge">パートナー</span></div>
           <div class="form-group" style="max-width:50%">
             <label>登録番号<span class="req">*</span></label>
-            <input type="text" id="regPartner" placeholder="例：67890">
+            <input type="text" id="regPartner" placeholder="例：123456" maxlength="6" pattern="\d{6}" inputmode="numeric">
           </div>
           <div class="form-group">
             <label>氏名（漢字）<span class="req">*</span></label>
@@ -575,10 +575,10 @@ function v(id, cond) {
 }
 function validate() {
   const ok = [
-    v('regLeader',    document.getElementById('regLeader').value.trim()!=''),
+    v('regLeader',    /^\d{6}$/.test(document.getElementById('regLeader').value.trim())),
     v('leaderKanji',  document.getElementById('leaderKanji').value.trim()!=''),
     v('leaderKana',   document.getElementById('leaderKana').value.trim()!=''),
-    v('regPartner',   document.getElementById('regPartner').value.trim()!=''),
+    v('regPartner',   /^\d{6}$/.test(document.getElementById('regPartner').value.trim())),
     v('partnerKanji', document.getElementById('partnerKanji').value.trim()!=''),
     v('partnerKana',  document.getElementById('partnerKana').value.trim()!=''),
     v('email',        /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(document.getElementById('email').value.trim())),
@@ -705,6 +705,15 @@ async function submitForm() {
 }
 
 // ===================== 初期化 =====================
+// 登録番号：全角→半角変換・数字のみ許可
+['regLeader','regPartner'].forEach(id => {
+  document.getElementById(id).addEventListener('input', function() {
+    this.value = this.value
+      .replace(/[０-９]/g, s => String.fromCharCode(s.charCodeAt(0) - 0xFEE0))
+      .replace(/\D/g, '')
+      .slice(0, 6);
+  });
+});
 buildEvents();
 calcFee();
 </script>
