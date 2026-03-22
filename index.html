@@ -493,7 +493,7 @@ function buildEventItem(ev) {
   div.innerHTML = `
     <input type="checkbox" id="ev_${ev.no}" data-fee="${ev.fee}">
     <div>
-      <div><span class="event-no">No.${ev.no}</span></div>
+      <div><span class="event-no">【No.${ev.no}】</span></div>
       <div class="event-name">${ev.name}</div>
       <div class="event-sub">${ev.detail}</div>
       ${isFree ? '<span class="event-free"><i class="fas fa-gift"></i> 出場料無料</span>' : ''}
@@ -621,13 +621,13 @@ function goConfirm() {
   const total = selectedEvents.reduce((s,e)=>s+e.fee, 0);
 
   const addrFull = gv('pref') + gv('city') + gv('addr');
-  const eventsLine = selectedEvents.map(e=>`No.${e.no} ${e.name}（${e.detail}）：${e.fee===0?'無料':'¥'+e.fee.toLocaleString()}`).join('\n');
+  const eventsLine = selectedEvents.map(e=>`【No.${e.no}】${e.name}（${e.detail}）：${e.fee===0?'無料':'¥'+e.fee.toLocaleString()}`).join('\n');
 
   const rows = [
-    ['リーダー登録番号', gv('regLeader')],
+    ['リーダー登録番号', `（${gv('regLeader')}）`],
     ['リーダー氏名', `${gv('leaderKanji')}（${gv('leaderKana')}）`],
     ['リーダー所属教室', gv('leaderDojo') || '（なし）'],
-    ['パートナー登録番号', gv('regPartner')],
+    ['パートナー登録番号', `（${gv('regPartner')}）`],
     ['パートナー氏名', `${gv('partnerKanji')}（${gv('partnerKana')}）`],
     ['パートナー所属教室', gv('partnerDojo') || '（なし）'],
     ['メールアドレス', gv('email')],
@@ -637,7 +637,7 @@ function goConfirm() {
   ];
 
   let html = rows.map(([k,v2])=>`<tr><th>${k}</th><td>${v2}</td></tr>`).join('');
-  html += `<tr><th>出場区分</th><td>${selectedEvents.map(e=>`<span class="event-tag"><span class="tag-no">No.${e.no}</span> ${e.name}</span>`).join('')}</td></tr>`;
+  html += `<tr><th>出場区分</th><td>${selectedEvents.map(e=>`<span class="event-tag"><span class="tag-no">【No.${e.no}】</span> ${e.name}</span>`).join('')}</td></tr>`;
   html += `<tr class="total-row"><th>出場料合計</th><td>¥${total.toLocaleString()}</td></tr>`;
   document.getElementById('confirmTable').innerHTML = html;
 
@@ -675,8 +675,8 @@ async function submitForm() {
   const d = window._submitData;
   const messageBody =
     `大会開催日：令和8年6月14日（日）\n` +
-    `リーダー登録番号：${d.regLeader}\n` +
-    `パートナー登録番号：${d.regPartner}\n` +
+    `リーダー登録番号：（${d.regLeader}）\n` +
+    `パートナー登録番号：（${d.regPartner}）\n` +
     `リーダー：${d.leaderKanji}（${d.leaderKana}）\n` +
     `パートナー：${d.partnerKanji}（${d.partnerKana}）\n` +
     `連絡先：${d.contactName}　携帯:${d.mobile}\n` +
@@ -690,7 +690,7 @@ async function submitForm() {
     reply_to:   d.email,
     from_name:  d.leaderKanji + ' / ' + d.partnerKanji,
     event_name: '2026 前期中部日本ダンス選手権 / 中部ダンスフェスティバル in 名古屋',
-    reg_no:     `リーダー：${d.regLeader} / パートナー：${d.regPartner}`,
+    reg_no:     `リーダー：（${d.regLeader}） / パートナー：（${d.regPartner}）`,
     leader:     d.leaderKanji + '（' + d.leaderKana + '）',
     partner:    d.partnerKanji + '（' + d.partnerKana + '）',
     phone:      d.mobile,
