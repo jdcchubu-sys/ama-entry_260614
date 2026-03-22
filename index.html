@@ -287,16 +287,7 @@ input.error{border-color:var(--danger)}
 
       <!-- シニア60 -->
       <div class="section-label"><i class="fas fa-ribbon"></i> シニア60　<span style="font-size:11px;font-weight:500;color:var(--muted)">どちらかが60歳以上のJDC中部登録選手</span></div>
-      <div class="event-col-wrap">
-        <div>
-          <div class="dance-type-label"><i class="fas fa-music"></i> ボールルーム</div>
-          <div id="seniorBREvents" class="event-grid"></div>
-        </div>
-        <div>
-          <div class="dance-type-label"><i class="fas fa-fire"></i> ラテンアメリカン</div>
-          <div id="seniorLAEvents" class="event-grid"></div>
-        </div>
-      </div>
+      <div id="seniorBREvents" class="event-grid" style="max-width:50%"></div>
 
       <!-- ジュニア -->
       <div class="section-label"><i class="fas fa-child"></i> ジュニア　<span style="font-size:11px;font-weight:500;color:var(--muted)">中学生以下</span></div>
@@ -438,12 +429,9 @@ const amaData = {
 // シニア60（どちらかが60歳以上）
 const seniorData = {
   br: [
-    { no:'3S', name:'シニア60（ボールルーム）', detail:'W T F 3種目総合', fee:FEE_NORMAL },
-    { no:'4S', name:'シニアボールルーム選手権', detail:'W T 2種目総合（B級）', fee:FEE_NORMAL },
+    { no:3, name:'シニア60 ラテン選手権', detail:'W T F 3種目総合', fee:FEE_NORMAL },
   ],
-  la: [
-    { no:'4Sa', name:'シニアボールルーム選手権', detail:'S P 2種目総合（B級）', fee:FEE_NORMAL },
-  ],
+  la: [],
 };
 
 // ジュニア（中学生以下）
